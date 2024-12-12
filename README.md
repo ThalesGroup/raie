@@ -1,44 +1,41 @@
-# Thales Open Source Template Project
+[![Project generated with PyScaffold](https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold)](https://pyscaffold.org/)
 
-Template for creating a new project in the [Thales GitHub organization](https://github.com/ThalesGroup).
+# raie
 
-Each Thales OSS project repository **MUST** contain the following files at the root:
+> Real-time Analysis of Interbeat-intervals with Electrocardiography
 
-- a `LICENSE` which has been chosen in accordance with legal department depending on your needs
 
-- a `README.md` outlining the project goals, sponsoring sig, and community contact information, [GitHub tips about README.md](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-readmes)
+## Description
+Code for Miriam Boutros' internship on "Real-time R-R interval extraction algorithm for monitoring stress with heart rate variability".
 
-- a `CONTRIBUTING.md` outlining how to contribute to the project, how to submit a pull request and an issue
+## Installation
+You can install the project via the following command:
 
-- a `SECURITY.md` outlining how the security concerns are handled, [GitHub tips about SECURITY.md](https://docs.github.com/en/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+```
+git clone https://github.com/ThalesGroup/raie.git
+pip install -e .
+```
 
-Below is an example of the common structure and information expected in a README.
+Note that the oldest version of Python that this project has been tested on is 3.10, while the newest version is 3.12.
 
-**Please keep this structure as is and only fill the content for each section according to your project.**
+## Running Tests
+This project uses pytest for testing. After installing the project and its dependencies, you can run the tests by simply executing pytest in the project root directory.
 
-If you need assistance or have question, please contact oss@thalesgroup.com
+However, the recommended way to run tests is using tox, which will take care of setting up a virtual environment with the correct dependencies for testing. If you haven't installed tox, you can do so with `pip install tox`.
 
-## Get started
+Once tox is installed, you can run the tests with the following command:
 
-XXX project purpose it to ...
+`tox`
 
-**Please also add the description into the About section (Description field)**
-
-## Documentation
-
-Documentation is available at [xxx/docs](https://xxx/docs/).
-
-You can use [GitHub pages](https://guides.github.com/features/pages/) to create your documentation.
-
-See an example here : https://github.com/ThalesGroup/ThalesGroup.github.io
-
-**Please also add the documentation URL into the About section (Website field)**
+This will run all tests and report the results.
 
 ## Contributing
+Contributions of all kinds are welcomed. For detailed information on how to contribute, please refer to our [Contributor's Guide](CONTRIBUTING.md), including instructions on how to report issues, build and improve the documentation, submit changes, etc.
 
-If you are interested in contributing to the XXX project, start by reading the [Contributing guide](/CONTRIBUTING.md).
 
-## License
+<!-- pyscaffold-notes -->
 
-The chosen license in accordance with legal department must be defined into an explicit [LICENSE](https://github.com/ThalesGroup/template-project/blob/master/LICENSE) file at the root of the repository
-You can also link this file in this README section.
+## Note
+
+This project has been set up using PyScaffold 4.5. For details and usage
+information on PyScaffold see https://pyscaffold.org/.
