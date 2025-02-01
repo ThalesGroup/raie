@@ -34,7 +34,7 @@ pip-requirements-parser==32.0.1
 pip_audit==2.7.3
 platformdirs==4.2.2
 pluggy==1.5.0
-prettytable==3.11.0
+prettytable==3.14.0
 py-serializable==1.1.0
 pycodestyle==2.12.1
 pydocstyle==6.3.0
