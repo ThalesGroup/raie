@@ -202,7 +202,7 @@ def download_and_format_mit_normal(output_path="./"):
 
     # Save
     df_ecg = pd.concat(dfs_ecg).to_csv(output_path + "ECGs.csv", index=False)
-    dfs_rpeaks = pd.concat(dfs_rpeaks).to_csv(output_path + "ECGs.csv", index=False)
+    dfs_rpeaks = pd.concat(dfs_rpeaks).to_csv(output_path + "Rpeaks.csv", index=False)
 
     # Quick test
     # import neurokit2 as nk
@@ -316,3 +316,5 @@ def download_and_format_fantasia(database_path="./", output_path="./"):
     # Save
     pd.concat(dfs_ecg).to_csv(output_path + "ECGs.csv", index=False)
     pd.concat(dfs_rpeaks).to_csv(output_path + "Rpeaks.csv", index=False)
+
+download_and_format_mit_normal()
