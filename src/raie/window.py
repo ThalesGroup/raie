@@ -136,11 +136,11 @@ def windowing(data, peaks, window_length, step_size, edge_threshold, outputFile)
 
 
 if __name__ == "__main__":
-    database = "gudb"
-    dataFile = pd.read_csv("./data/"+database+"/ECGs.csv")
-    rpeaksFile = pd.read_csv("./data/"+database+"/Rpeaks.csv")
-    winlen = [5,10,50,15,20,30,40,70,100,150]
+    database = "/data/mit-bih-normal-sinus-rhythm-database-1.0.0" # Database path
+    dataFile = pd.read_csv("./ECGs.csv") # Path to where the ECGs.csv file is stored
+    rpeaksFile = pd.read_csv("./Rpeaks.csv") # Path to where the Rpeaks.csv file is stored
+    winlen = [5,15,20,25,30,40,50,60,80,100,150] # List of window lengths to try
     for i in winlen:
         print("Window_length = "+str(i))
-        outputFile = "./output/M2/real_neurokit_"+database+"_w"+str(i)+"_e9_fixing.csv"
-        results_windowing = windowing(dataFile, rpeaksFile, window_length=i, step_size=1, edge_threshold=9, outputFile = outputFile)
+        outputFile = "./output/real_sleepecg_w"+str(i)+"_e9_fixing.csv" # Example of output path
+        results_windowing = windowing(dataFile, rpeaksFile, window_length=i, step_size=1, edge_threshold=9, outputFile = outputFile) # Running the real-time pipeline with a step size of 1 and edge threshold of 9.
