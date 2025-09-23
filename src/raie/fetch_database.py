@@ -153,7 +153,7 @@ def download_and_format_mit_normal(output_path="./"):
     """Script for formatting the MIT-Normal Sinus Rhythm Database
 
     Steps:
-        1. Download the ZIP database from https://physionet.org/content/nsrdb/1.0.0/
+        1. Download the ZIP database from https://physionet.org/content/nsrdb/1.0.0/ and put it in data folder
         2. Open it with a zip-opener (WinZip, 7zip).
         3. Extract the folder of the same name (named 'mit-bih-normal-sinus-rhythm-database-1.0.0') to the same folder as this script.
         4. Run this script.
@@ -202,7 +202,7 @@ def download_and_format_mit_normal(output_path="./"):
 
     # Save
     df_ecg = pd.concat(dfs_ecg).to_csv(output_path + "ECGs.csv", index=False)
-    dfs_rpeaks = pd.concat(dfs_rpeaks).to_csv(output_path + "ECGs.csv", index=False)
+    dfs_rpeaks = pd.concat(dfs_rpeaks).to_csv(output_path + "Rpeaks.csv", index=False)
 
     # Quick test
     # import neurokit2 as nk
@@ -316,3 +316,4 @@ def download_and_format_fantasia(database_path="./", output_path="./"):
     # Save
     pd.concat(dfs_ecg).to_csv(output_path + "ECGs.csv", index=False)
     pd.concat(dfs_rpeaks).to_csv(output_path + "Rpeaks.csv", index=False)
+
