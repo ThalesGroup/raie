@@ -3,7 +3,7 @@
 boolean.py==4.0
 CacheControl==0.14.2
 certifi==2024.7.4
-charset-normalizer==3.3.2
+charset-normalizer==3.4.3
 coverage==7.6.12
 cyclonedx-python-lib==7.6.0
 defusedxml==0.7.1
