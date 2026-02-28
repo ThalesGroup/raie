@@ -22,7 +22,7 @@ msgpack==1.0.8
 mypy==1.15.0
 mypy-extensions==1.0.0
 neurokit2==0.2.10
-numpy==2.1.0
+numpy<2
 packageurl-python==0.15.6
 packaging==24.1
 pandas==2.2.2
@@ -59,3 +59,7 @@ wcwidth==0.2.13
 webencodings==0.5.1
 xdoctest==1.2.0
 zipp==3.20.0
+wfdb 
+ecg_gudb_database
+sleepecg
+tempbeat

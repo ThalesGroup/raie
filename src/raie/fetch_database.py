@@ -74,14 +74,14 @@ def download_and_format_mit_arrhythmia(database_path="./", output_path="./"):
     Steps:
         1. Download the ZIP database from https://alpha.physionet.org/content/mitdb/1.0.0/
         2. Open it with a zip-opener (WinZip, 7zip).
-        3. Extract the folder of the same name (named 'mit-bih-arrhythmia-database-1.0.0') to the same folder as this script.
+        3. Extract the folder of the same name (named 'mit-bih-arrhythmia-database-1.0.0') to the same folder as he database_path.
         4. Run this script.
 
     Credits:
         https://github.com/berndporr/py-ecg-detectors/blob/master/tester_MITDB.py by Bernd Porr
     """
 
-    database_path = database_path
+    database_path = database_path + 'mit-bih-arrhythmia-database-1.0.0/'
 
     # Check if expected folder exists
     if not os.path.exists(database_path):
@@ -148,24 +148,24 @@ def read_file(file, participant):
     return data, anno
 
 
-def download_and_format_mit_normal(output_path="./"):
+def download_and_format_mit_normal(database_path="./", output_path="./"):
     # -*- coding: utf-8 -*-
     """Script for formatting the MIT-Normal Sinus Rhythm Database
 
     Steps:
         1. Download the ZIP database from https://physionet.org/content/nsrdb/1.0.0/ and put it in data folder
         2. Open it with a zip-opener (WinZip, 7zip).
-        3. Extract the folder of the same name (named 'mit-bih-normal-sinus-rhythm-database-1.0.0') to the same folder as this script.
+        3. Extract the folder of the same name (named 'mit-bih-normal-sinus-rhythm-database-1.0.0') to the same folder as tthe database path.
         4. Run this script.
 
     Credits:
         https://github.com/berndporr/py-ecg-detectors/blob/master/tester_MITDB.py by Bernd Porr
     """
-
+    database_path = database_path + 'mit-bih-normal-sinus-rhythm-database-1.0.0/'
     os.listdir("./")
     data_files = [
-        "./data/mit-bih-normal-sinus-rhythm-database-1.0.0/" + file
-        for file in os.listdir("./data/mit-bih-normal-sinus-rhythm-database-1.0.0/")
+        database_path + file
+        for file in os.listdir(database_path)
         if ".dat" in file
     ]
 
@@ -266,7 +266,7 @@ def download_and_format_fantasia(database_path="./", output_path="./"):
     Steps:
         1. Download the ZIP database from https://physionet.org/content/fantasia/1.0.0/
         2. Open it with a zip-opener (WinZip, 7zip).
-        3. Extract the folder of the same name (named 'fantasia-database-1.0.0') to the same folder as this script.
+        3. Extract the folder of the same name (named 'fantasia-database-1.0.0') to the same folder as the database path.
         4. Run this script.
     """
 
