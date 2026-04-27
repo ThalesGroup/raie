@@ -307,7 +307,7 @@ def remove_previous_peaks(predicted, last_peak_found):
         predicted = add_remove(predicted, [last_peak_found], remove_previous)
     return predicted
 
-def workflow(ecgs, rpeaks, window_length, step_size, count, last_peak_found, edge_threshold):
+def workflow(ecgs, rpeaks, window_length, step_size, count, last_peak_found, edge_threshold, algorithm = neurokit):
     """Construct the real-time workflow.
     This function gets called in the windowing function. It contains all the steps for the real-time workflow.
     You can edit and perform all the operations that you want in the current window here.
@@ -338,6 +338,8 @@ def workflow(ecgs, rpeaks, window_length, step_size, count, last_peak_found, edg
         The sample number of the last peak found in the previous window.
     edge_thereshold: float
         Indicates the time in seconds of the current window after which the found peaks are discarded.
+    algorithm : string
+        Indicates the peak detection algorithm used.
 
 
     Returns
@@ -349,8 +351,34 @@ def workflow(ecgs, rpeaks, window_length, step_size, count, last_peak_found, edg
     """
     start = time.time()
 
-    # Detect Peaks
-    result = find_Rpeaks(ecgs, rpeaks, method=neurokit)
+    # Detect Peaks based on the algorithm chosen
+    match algorithm:
+        case "neurokit":
+            result = find_Rpeaks(ecgs, rpeaks, method=neurokit)
+        case "christov2004":
+            result = find_Rpeaks(ecgs, rpeaks, method=christov2004)
+        case "elgendi2010":
+            result = find_Rpeaks(ecgs, rpeaks, method=elgendi2010)
+        case "engzeemod2012":
+            result = find_Rpeaks(ecgs, rpeaks, method=engzeemod2012)
+        case "gamboa2008":
+            result = find_Rpeaks(ecgs, rpeaks, method=gamboa2008)
+        case "hamilton2002":
+            result = find_Rpeaks(ecgs, rpeaks, method=hamilton2002)
+        case "kalidas2017":
+            result = find_Rpeaks(ecgs, rpeaks, method=kalidas2017)
+        case "martinez2004":
+            result = find_Rpeaks(ecgs, rpeaks, method=martinez2004)
+        case "pantompkins1985":
+            result = find_Rpeaks(ecgs, rpeaks, method=pantompkins1985)
+        case "rodrigues2020":
+            result = find_Rpeaks(ecgs, rpeaks, method=rodrigues2020)
+        case "sleepecg":
+            result = find_Rpeaks(ecgs, rpeaks, method=sleepecg)
+        case "tempbeat":
+            result = find_Rpeaks(ecgs, rpeaks, method=tempbeat)
+
+
     predicted = result["Predicted"][0]
     sampling_rate = result["Sampling_Rate"][0]
 
