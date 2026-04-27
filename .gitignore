@@ -59,3 +59,4 @@ venv/
 env/
 .venv/
 conda-env/
+raie_venv_test/
