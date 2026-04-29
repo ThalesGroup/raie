@@ -307,7 +307,7 @@ def remove_previous_peaks(predicted, last_peak_found):
         predicted = add_remove(predicted, [last_peak_found], remove_previous)
     return predicted
 
-def workflow(ecgs, rpeaks, window_length, step_size, count, last_peak_found, edge_threshold, algorithm = neurokit):
+def workflow(ecgs, rpeaks, window_length, step_size, count, last_peak_found, edge_threshold, algorithm = "neurokit"):
     """Construct the real-time workflow.
     This function gets called in the windowing function. It contains all the steps for the real-time workflow.
     You can edit and perform all the operations that you want in the current window here.
