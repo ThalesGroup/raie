@@ -3,7 +3,7 @@ import pandas as pd
 from real_time import workflow
 
 
-def windowing(data, peaks, window_length, step_size, edge_threshold, outputFile):
+def windowing(data, peaks, window_length, step_size, edge_threshold, outputFile, detection_method):
     """**Adapting the benchmarking function to windows of ECG signal**
     The function relies on indices to delineate the window:
         - start_index: refers to the first sample in the window
@@ -37,6 +37,9 @@ def windowing(data, peaks, window_length, step_size, edge_threshold, outputFile)
                 Only the peaks included in the 9 seconds are kept.
     outputFile : string
         Path to a directory to save a CSV file containing the results.
+    detection_method : string
+        Indicates the peak detection algorithm adopted. The algorithms available are: 
+        christov2004, elgendi2010, engzeemod2012, gamboa2008, hamilton2002, kalidas2017, martinez2004, neurokit, pantompkins1985, rodrigues2020, sleepecg, tempbeat.
 
     Returns
     --------
@@ -85,6 +88,7 @@ def windowing(data, peaks, window_length, step_size, edge_threshold, outputFile)
                 count=count,
                 last_peak_found=last_peak_found,
                 edge_threshold=edge_threshold_samples,
+                algorithm=detection_method
             )
             all_windows.append(window_result)
             count = count + 1
@@ -112,6 +116,7 @@ def windowing(data, peaks, window_length, step_size, edge_threshold, outputFile)
                 count=count,
                 last_peak_found=last_peak_found,
                 edge_threshold=edge_threshold_samples,
+                algorithm=detection_method
             )
             count = count + 1
             all_windows.append(window_result)
