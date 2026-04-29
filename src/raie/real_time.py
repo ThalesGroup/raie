@@ -3,7 +3,6 @@ from math import ceil
 from statistics import mean, median
 
 import numpy as np
-import pandas as pd
 from benchmark import benchmark_ecg_preprocessing
 from methods import (
     christov2004,
