@@ -1,6 +1,5 @@
 import neurokit2 as nk
 import pandas as pd
-import sleepecg
 
 from raie.methods import (
     christov2004,
