@@ -338,7 +338,7 @@ def workflow(ecgs, rpeaks, window_length, step_size, count, last_peak_found, edg
         The sample number of the last peak found in the previous window.
     edge_thereshold: float
         Indicates the time in seconds of the current window after which the found peaks are discarded.
-    algorithm : string
+    algorithm: string
         Indicates the peak detection algorithm used.
 
 
