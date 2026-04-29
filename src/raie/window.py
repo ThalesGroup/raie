@@ -88,7 +88,7 @@ def windowing(data, peaks, window_length, step_size, edge_threshold, outputFile,
                 count=count,
                 last_peak_found=last_peak_found,
                 edge_threshold=edge_threshold_samples,
-                algorithm= detection_method
+                algorithm=detection_method
             )
             all_windows.append(window_result)
             count = count + 1
