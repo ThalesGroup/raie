@@ -42,7 +42,9 @@ def pantompkins1985(ecg, sampling_rate):
         A DataFrame containing information about the peaks found.
 
     """
-    signal, info = nk.ecg_peaks(ecg, sampling_rate=sampling_rate, method="pantompkins1985")
+    signal, info = nk.ecg_peaks(
+        ecg, sampling_rate=sampling_rate, method="pantompkins1985"
+    )
     return info["ECG_R_Peaks"]
 
 
@@ -168,7 +170,9 @@ def engzeemod2012(ecg, sampling_rate):
         A DataFrame containing information about the peaks found.
 
     """
-    signal, info = nk.ecg_peaks(ecg, sampling_rate=sampling_rate, method="engzeemod2012")
+    signal, info = nk.ecg_peaks(
+        ecg, sampling_rate=sampling_rate, method="engzeemod2012"
+    )
     return info["ECG_R_Peaks"]
 
 
@@ -210,12 +214,14 @@ def rodrigues2020(ecg, sampling_rate):
         A DataFrame containing information about the peaks found.
 
     """
-    signal, info = nk.ecg_peaks(ecg, sampling_rate=sampling_rate, method="rodrigues2020")
+    signal, info = nk.ecg_peaks(
+        ecg, sampling_rate=sampling_rate, method="rodrigues2020"
+    )
     return info["ECG_R_Peaks"]
 
 
 def sleepecg(ecg, sampling_rate):
-    """ Run SleepECG as peak detection algorithm.
+    """Run SleepECG as peak detection algorithm.
     The function detects Rpeaks in ECG data using SleepECG.
 
     Parameters
@@ -235,7 +241,7 @@ def sleepecg(ecg, sampling_rate):
 
 
 def tempbeat(ecg, sampling_rate):
-    """ Run TempBeat as peak detection algorithm
+    """Run TempBeat as peak detection algorithm
     The function detects Rpeaks in ECG data using TempBeat.
 
     Parameters
@@ -252,4 +258,8 @@ def tempbeat(ecg, sampling_rate):
 
     """
     peak_time = hb_extract(ecg, sampling_rate=sampling_rate, method="temp")
-    return timestamp_to_samp(peak_time, sampling_rate=sampling_rate, sig_time=sampling_rate_to_sig_time(ecg, sampling_rate=sampling_rate))
+    return timestamp_to_samp(
+        peak_time,
+        sampling_rate=sampling_rate,
+        sig_time=sampling_rate_to_sig_time(ecg, sampling_rate=sampling_rate),
+    )

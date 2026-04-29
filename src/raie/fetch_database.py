@@ -81,7 +81,7 @@ def download_and_format_mit_arrhythmia(database_path="./", output_path="./"):
         https://github.com/berndporr/py-ecg-detectors/blob/master/tester_MITDB.py by Bernd Porr
     """
 
-    database_path = database_path + 'mit-bih-arrhythmia-database-1.0.0/'
+    database_path = database_path + "mit-bih-arrhythmia-database-1.0.0/"
 
     # Check if expected folder exists
     if not os.path.exists(database_path):
@@ -94,7 +94,9 @@ def download_and_format_mit_arrhythmia(database_path="./", output_path="./"):
                 "and unzip it in the same folder as this script."
             )
 
-    data_files = [database_path + file for file in os.listdir(database_path) if ".dat" in file]
+    data_files = [
+        database_path + file for file in os.listdir(database_path) if ".dat" in file
+    ]
 
     dfs_ecg = []
     dfs_rpeaks = []
@@ -110,9 +112,14 @@ def download_and_format_mit_arrhythmia(database_path="./", output_path="./"):
         dfs_rpeaks.append(anno)
 
         # Store additional recording if available
-        if "x_" + file.replace(database_path, "") in os.listdir(database_path + "x_mitdb/"):
+        if "x_" + file.replace(database_path, "") in os.listdir(
+            database_path + "x_mitdb/"
+        ):
             print("  - Additional recording detected.")
-            data, anno = read_file(database_path + "/x_mitdb/" + "x_" + file.replace(database_path, ""), participant)
+            data, anno = read_file(
+                database_path + "/x_mitdb/" + "x_" + file.replace(database_path, ""),
+                participant,
+            )
             # Store with the rest
             dfs_ecg.append(data)
             dfs_rpeaks.append(anno)
@@ -138,7 +145,32 @@ def read_file(file, participant):
     # getting annotations
     anno = wfdb.rdann(file[:-4], "atr")
     anno = np.unique(
-        anno.sample[np.in1d(anno.symbol, ["N", "L", "R", "B", "A", "a", "J", "S", "V", "r", "F", "e", "j", "n", "E", "/", "f", "Q", "?"])]
+        anno.sample[
+            np.in1d(
+                anno.symbol,
+                [
+                    "N",
+                    "L",
+                    "R",
+                    "B",
+                    "A",
+                    "a",
+                    "J",
+                    "S",
+                    "V",
+                    "r",
+                    "F",
+                    "e",
+                    "j",
+                    "n",
+                    "E",
+                    "/",
+                    "f",
+                    "Q",
+                    "?",
+                ],
+            )
+        ]
     )
     anno = pd.DataFrame({"Rpeaks": anno})
     anno["Participant"] = "MIT-Arrhythmia_%.2i" % (participant)
@@ -161,12 +193,10 @@ def download_and_format_mit_normal(database_path="./", output_path="./"):
     Credits:
         https://github.com/berndporr/py-ecg-detectors/blob/master/tester_MITDB.py by Bernd Porr
     """
-    database_path = database_path + 'mit-bih-normal-sinus-rhythm-database-1.0.0/'
+    database_path = database_path + "mit-bih-normal-sinus-rhythm-database-1.0.0/"
     os.listdir("./")
     data_files = [
-        database_path + file
-        for file in os.listdir(database_path)
-        if ".dat" in file
+        database_path + file for file in os.listdir(database_path) if ".dat" in file
     ]
 
     dfs_ecg = []
@@ -193,7 +223,9 @@ def download_and_format_mit_normal(database_path="./", output_path="./"):
 
         # Select only 1h of recording (otherwise it's too big)
         data = data[460800 : 460800 * 3].reset_index(drop=True)
-        anno = anno[(anno["Rpeaks"] > 460800) & (anno["Rpeaks"] <= 460800 * 2)].reset_index(drop=True)
+        anno = anno[
+            (anno["Rpeaks"] > 460800) & (anno["Rpeaks"] <= 460800 * 2)
+        ].reset_index(drop=True)
         anno["Rpeaks"] = anno["Rpeaks"] - 460800
 
         # Store with the rest
@@ -227,7 +259,11 @@ def download_and_format_ludb(database_path="./", output_path="./"):
     for participant in range(200):
         filename = str(participant + 1)
 
-        data, info = wfdb.rdsamp(database_path + "lobachevsky-university-electrocardiography-database-1.0.1/data/" + filename)
+        data, info = wfdb.rdsamp(
+            database_path
+            + "lobachevsky-university-electrocardiography-database-1.0.1/data/"
+            + filename
+        )
 
         # Get signal
         data = pd.DataFrame(data, columns=info["sig_name"])
@@ -238,7 +274,12 @@ def download_and_format_ludb(database_path="./", output_path="./"):
         data["Database"] = "LUDB"
 
         # Get annotations
-        anno = wfdb.rdann(database_path + "lobachevsky-university-electrocardiography-database-1.0.1/data/" + filename, "i")
+        anno = wfdb.rdann(
+            database_path
+            + "lobachevsky-university-electrocardiography-database-1.0.1/data/"
+            + filename,
+            "i",
+        )
         anno = anno.sample[np.where(np.array(anno.symbol) == "N")[0]]
         anno = pd.DataFrame({"Rpeaks": anno})
         anno["Participant"] = "LUDB_%.2i" % (participant + 1)
@@ -316,4 +357,3 @@ def download_and_format_fantasia(database_path="./", output_path="./"):
     # Save
     pd.concat(dfs_ecg).to_csv(output_path + "ECGs.csv", index=False)
     pd.concat(dfs_rpeaks).to_csv(output_path + "Rpeaks.csv", index=False)
-

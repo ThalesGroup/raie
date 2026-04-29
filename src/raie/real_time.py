@@ -1,10 +1,9 @@
+import time
 from math import ceil
 from statistics import mean, median
-import time
 
 import numpy as np
 import pandas as pd
-
 from benchmark import benchmark_ecg_preprocessing
 from methods import (
     christov2004,
@@ -58,6 +57,7 @@ def find_Rpeaks(ecgs, rpeaks, method):
     result["Predicted"] = [predicted]
     return result
 
+
 def add_remove(predicted, add, remove):
     """Add and remove lists from a list.
     This function adds the element of a list and removes the elements of another list.
@@ -81,6 +81,7 @@ def add_remove(predicted, add, remove):
     result = result + add
     result.sort()
     return result
+
 
 def insert_peaks(first, last, interval):
     """Insert peaks.
@@ -110,6 +111,7 @@ def insert_peaks(first, last, interval):
     remove.append(last)
     return add, remove
 
+
 def find_small_gaps(predicted, threshold):
     """Find small gaps.
     This function finds small gaps in ECG data and determines the peaks to remove in case of small gaps.
@@ -134,9 +136,10 @@ def find_small_gaps(predicted, threshold):
             i = i + 1
     return remove
 
+
 def find_large_gaps(predicted, threshold, interval):
     """Find large gaps.
-    This function finds large gaps in ECG data. Then, it determines the peaks to add by deviding the large gap by the given R-R interval value. 
+    This function finds large gaps in ECG data. Then, it determines the peaks to add by deviding the large gap by the given R-R interval value.
     Also, it indicates that the last peak should be removed by returning it in the remove list.
 
     Parameters
@@ -166,6 +169,7 @@ def find_large_gaps(predicted, threshold, interval):
             remove = remove + delete
     return add, remove
 
+
 def fix_gaps(predicted, small_gap, large_gap, interval):
     """Fix small and lare gaps.
     This function removes small gaps in ECG data and adds the necessary peaks in case of large gaps.
@@ -193,6 +197,7 @@ def fix_gaps(predicted, small_gap, large_gap, interval):
     predicted_fixed = add_remove(predicted, add, remove)
     return predicted_fixed
 
+
 def get_stat_info(predicted, mode="mean"):
     """Compute statistical information.
     THis function computes the mean or the median of R-R intervals depending to the mode chosen.
@@ -216,6 +221,7 @@ def get_stat_info(predicted, mode="mean"):
     elif mode == "median":
         return median(predicted)
 
+
 def get_RR_intervals(predicted):
     """Compute R-R intervals.
     This function compute R-R intervals from a list of R-peaks.
@@ -234,6 +240,7 @@ def get_RR_intervals(predicted):
     for i in range(0, len(predicted) - 1):
         RR.append(abs(predicted[i + 1] - predicted[i]))
     return RR
+
 
 def find_previous_peaks(predicted, last_peak_found):
     """Find peaks preceding a given peak.
@@ -257,6 +264,7 @@ def find_previous_peaks(predicted, last_peak_found):
             peaks_to_remove.append(predicted[i])
 
     return peaks_to_remove
+
 
 def find_peaks_beyond_edge(predicted, edge_threshold):
     """Find peaks exceeding a given edge threshold.
@@ -283,6 +291,7 @@ def find_peaks_beyond_edge(predicted, edge_threshold):
 
     return peaks_to_remove
 
+
 def remove_previous_peaks(predicted, last_peak_found):
     """Remove the previous peaks and add the last peak found.
     This function removes the previous peaks found in the find_previous_peaks function. To make sure that the R-R interval add up at the end, the fucntion adds the last peak found in the last window to the current window.
@@ -307,7 +316,17 @@ def remove_previous_peaks(predicted, last_peak_found):
         predicted = add_remove(predicted, [last_peak_found], remove_previous)
     return predicted
 
-def workflow(ecgs, rpeaks, window_length, step_size, count, last_peak_found, edge_threshold, algorithm = "neurokit"):
+
+def workflow(
+    ecgs,
+    rpeaks,
+    window_length,
+    step_size,
+    count,
+    last_peak_found,
+    edge_threshold,
+    algorithm="neurokit",
+):
     """Construct the real-time workflow.
     This function gets called in the windowing function. It contains all the steps for the real-time workflow.
     You can edit and perform all the operations that you want in the current window here.
@@ -378,7 +397,6 @@ def workflow(ecgs, rpeaks, window_length, step_size, count, last_peak_found, edg
         case "tempbeat":
             result = find_Rpeaks(ecgs, rpeaks, method=tempbeat)
 
-
     predicted = result["Predicted"][0]
     sampling_rate = result["Sampling_Rate"][0]
 
@@ -392,16 +410,23 @@ def workflow(ecgs, rpeaks, window_length, step_size, count, last_peak_found, edg
     predicted_new = remove_previous_peaks(predicted, last_peak_found)
 
     # Remove peaks beyong edge threshold
-    predicted_new_trimmed = add_remove(predicted_new, [], find_peaks_beyond_edge(predicted_new, edge_threshold))
+    predicted_new_trimmed = add_remove(
+        predicted_new, [], find_peaks_beyond_edge(predicted_new, edge_threshold)
+    )
 
     # Fix small and large gaps : small_gap and large_gap values to be changed asneeded
-    predicted_fixed = fix_gaps(predicted_new_trimmed, small_gap = 0.1 * sampling_rate, large_gap = 2 * sampling_rate, interval = median)
-    #predicted_fixed = predicted_new_trimmed
+    predicted_fixed = fix_gaps(
+        predicted_new_trimmed,
+        small_gap=0.1 * sampling_rate,
+        large_gap=2 * sampling_rate,
+        interval=median,
+    )
+    # predicted_fixed = predicted_new_trimmed
     # Find new R-R intervals
     RR_new = get_RR_intervals(predicted_fixed)
 
     end = time.time()
-    
+
     result["FixedPeaks"] = [predicted_fixed]
     result["R-R Intervals (initial)"] = [RR_intial]
     result["PreviousLastPeak"] = last_peak_found
@@ -411,7 +436,7 @@ def workflow(ecgs, rpeaks, window_length, step_size, count, last_peak_found, edg
     else:
         result["NewLastPeak"] = predicted_fixed[-1]
     result["R-R Intervals (new)"] = [RR_new]
-    
+
     execution_time = end - start
     result["ExecutionTime"] = execution_time
     return result, result["NewLastPeak"][0]

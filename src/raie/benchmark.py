@@ -1,8 +1,8 @@
 import datetime
 
-from neurokit2.signal import signal_period
 import numpy as np
 import pandas as pd
+from neurokit2.signal import signal_period
 
 
 def benchmark_ecg_preprocessing(function, ecg, rpeaks=None, sampling_rate=1000):
@@ -52,25 +52,27 @@ def benchmark_ecg_preprocessing(function, ecg, rpeaks=None, sampling_rate=1000):
 
     """
     # find data
-  
+
     if rpeaks is None:
-      
+
         rpeaks = ecg
 
     if isinstance(ecg, str):
-     
+
         ecg = pd.read_csv(ecg + "/ECGs.csv")
 
     if isinstance(rpeaks, str):
-     
+
         rpeaks = pd.read_csv(rpeaks + "/Rpeaks.csv")
 
     if isinstance(ecg, pd.DataFrame):
- 
+
         results = _benchmark_ecg_preprocessing_databases(function, ecg, rpeaks)
     else:
-    
-        results = _benchmark_ecg_preprocessing(function, ecg, rpeaks, sampling_rate=sampling_rate)
+
+        results = _benchmark_ecg_preprocessing(
+            function, ecg, rpeaks, sampling_rate=sampling_rate
+        )
 
     return results
 
@@ -79,25 +81,28 @@ def _benchmark_ecg_preprocessing_databases(function, ecgs, rpeaks):
     """A wrapper over _benchmark_ecg_preprocessing when the input is a database."""
     # Run algorithms
     results = []
- 
+
     for participant in ecgs["Participant"].unique():
-       
+
         for database in ecgs[ecgs["Participant"] == participant]["Database"].unique():
-            
+
             # Extract the right slice of data
-            ecg_slice = ecgs[(ecgs["Participant"] == participant) & (ecgs["Database"] == database)]
-            rpeaks_slice = rpeaks[(rpeaks["Participant"] == participant) & (rpeaks["Database"] == database)]
+            ecg_slice = ecgs[
+                (ecgs["Participant"] == participant) & (ecgs["Database"] == database)
+            ]
+            rpeaks_slice = rpeaks[
+                (rpeaks["Participant"] == participant)
+                & (rpeaks["Database"] == database)
+            ]
             sampling_rate = ecg_slice["Sampling_Rate"].unique()[0]
 
             # Extract values
             ecg = ecg_slice["ECG"].values
 
             rpeak = rpeaks_slice["Rpeaks"].values
-          
 
             # Run benchmark
             result = _benchmark_ecg_preprocessing(function, ecg, rpeak, sampling_rate)
-         
 
             # Add info
             result["Participant"] = participant
@@ -110,10 +115,10 @@ def _benchmark_ecg_preprocessing_databases(function, ecgs, rpeaks):
 
 def _benchmark_ecg_preprocessing(function, ecg, rpeak, sampling_rate=1000):
     # Apply function
-    
+
     t0 = datetime.datetime.now()
     try:
-        
+
         found_rpeaks = function(ecg, sampling_rate=sampling_rate)
         duration = (datetime.datetime.now() - t0).total_seconds()
     # In case of failure
@@ -131,8 +136,10 @@ def _benchmark_ecg_preprocessing(function, ecg, rpeak, sampling_rate=1000):
         )
 
     # Compare R peaks
-    
-    score, error = benchmark_ecg_compareRpeaks(rpeak, found_rpeaks, sampling_rate=sampling_rate)
+
+    score, error = benchmark_ecg_compareRpeaks(
+        rpeak, found_rpeaks, sampling_rate=sampling_rate
+    )
 
     return pd.DataFrame(
         {
@@ -167,13 +174,23 @@ def benchmark_ecg_compareRpeaks(true_rpeaks, found_rpeaks, sampling_rate=250):
 
     """
     # Failure to find sufficient R-peaks
-    
+
     if len(found_rpeaks) <= 3:
         return np.nan, "R-peaks detected <= 3"
 
     length = np.max(np.concatenate([true_rpeaks, found_rpeaks]))
 
-    true_interpolated = signal_period(true_rpeaks, sampling_rate=sampling_rate, desired_length=length, interpolation_method="linear")
-    found_interpolated = signal_period(found_rpeaks, sampling_rate=sampling_rate, desired_length=length, interpolation_method="linear")
+    true_interpolated = signal_period(
+        true_rpeaks,
+        sampling_rate=sampling_rate,
+        desired_length=length,
+        interpolation_method="linear",
+    )
+    found_interpolated = signal_period(
+        found_rpeaks,
+        sampling_rate=sampling_rate,
+        desired_length=length,
+        interpolation_method="linear",
+    )
 
     return np.mean(np.abs(found_interpolated - true_interpolated)), "None"

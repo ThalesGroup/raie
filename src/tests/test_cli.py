@@ -1,6 +1,7 @@
 """Test cases for the console module."""
-from click.testing import CliRunner
+
 import pytest
+from click.testing import CliRunner
 
 from raie import cli
 
