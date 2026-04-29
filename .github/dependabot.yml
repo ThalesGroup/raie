@@ -4,14 +4,14 @@ updates:
 - package-ecosystem: pip
   directory: "/"
   schedule:
-    interval: monthly
+    interval: yearly
     time: "10:00"
   open-pull-requests-limit: 10
 
 - package-ecosystem: docker
   directory: "/"
   schedule:
-    interval: monthly
+    interval: yearly
     time: "10:00"
   open-pull-requests-limit: 10
   ignore:
@@ -22,6 +22,6 @@ updates:
 - package-ecosystem: npm
   directory: "/"
   schedule:
-    interval: monthly
+    interval: yearly
     time: "10:00"
   open-pull-requests-limit: 10
