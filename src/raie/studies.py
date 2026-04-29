@@ -1,7 +1,5 @@
 import neurokit2 as nk
 import pandas as pd
-import sleepecg
-import tempbeat as tb
 
 from raie.methods import (
     christov2004,
@@ -47,7 +45,7 @@ def study_1(output_path):
         neurokit,
         pantompkins1985,
         hamilton2002,
-        martinez,
+        martinez2004,
         christov2004,
         gamboa2008,
         elgendi2010,

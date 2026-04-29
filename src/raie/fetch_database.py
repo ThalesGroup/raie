@@ -63,8 +63,8 @@ def download_and_format_gudb(output_path="./"):
     #            einthoven_iii = ecg_class.einthoven_III
 
     # Save
-    df_ecg = pd.concat(dfs_ecg).to_csv(output_path + "ECGs.csv", index=False)
-    dfs_rpeaks = pd.concat(dfs_rpeaks).to_csv(output_path + "Rpeaks.csv", index=False)
+    pd.concat(dfs_ecg).to_csv(output_path + "ECGs.csv", index=False)
+    pd.concat(dfs_rpeaks).to_csv(output_path + "Rpeaks.csv", index=False)
 
 
 def download_and_format_mit_arrhythmia(database_path="./", output_path="./"):
@@ -125,8 +125,8 @@ def download_and_format_mit_arrhythmia(database_path="./", output_path="./"):
             dfs_rpeaks.append(anno)
 
     # Save
-    df_ecg = pd.concat(dfs_ecg).to_csv(output_path + "ECGs.csv", index=False)
-    dfs_rpeaks = pd.concat(dfs_rpeaks).to_csv(output_path + "Rpeaks.csv", index=False)
+    pd.concat(dfs_ecg).to_csv(output_path + "ECGs.csv", index=False)
+    pd.concat(dfs_rpeaks).to_csv(output_path + "Rpeaks.csv", index=False)
 
     # Quick test
     # import neurokit2 as nk
@@ -233,8 +233,8 @@ def download_and_format_mit_normal(database_path="./", output_path="./"):
         dfs_rpeaks.append(anno)
 
     # Save
-    df_ecg = pd.concat(dfs_ecg).to_csv(output_path + "ECGs.csv", index=False)
-    dfs_rpeaks = pd.concat(dfs_rpeaks).to_csv(output_path + "Rpeaks.csv", index=False)
+    pd.concat(dfs_ecg).to_csv(output_path + "ECGs.csv", index=False)
+    pd.concat(dfs_rpeaks).to_csv(output_path + "Rpeaks.csv", index=False)
 
     # Quick test
     # import neurokit2 as nk
