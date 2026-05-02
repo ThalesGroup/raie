@@ -3,8 +3,8 @@ from math import ceil
 from statistics import mean, median
 
 import numpy as np
-from benchmark import benchmark_ecg_preprocessing
-from methods import (
+from raie.benchmark import benchmark_ecg_preprocessing
+from raie.methods import (
     christov2004,
     elgendi2010,
     engzeemod2012,

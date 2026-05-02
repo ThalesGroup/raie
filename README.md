@@ -13,10 +13,14 @@ You can install the project via the following command:
 
 ```
 git clone https://github.com/ThalesGroup/raie.git
+pip install -r "requirements.txt"
 pip install -e .
 ```
 
 Note that the oldest version of Python that this project has been tested on is 3.10, while the newest version is 3.12.
+
+## Getting Started
+A tutorial code in a notebook called [Example.ipynb](tutorial/Example.ipynb) demonstrates formatting the data and running the ECG peak detection workflow.
 
 ## Running Tests
 This project uses pytest for testing. After installing the project and its dependencies, you can run the tests by simply executing pytest in the project root directory.

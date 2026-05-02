@@ -1,5 +1,5 @@
 import pandas as pd
-from real_time import workflow
+from raie.real_time import workflow
 
 
 def windowing(
