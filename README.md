@@ -17,7 +17,7 @@ pip install -r "requirements.txt"
 pip install -e .
 ```
 
-Note that the oldest version of Python that this project has been tested on is 3.10, while the newest version is 3.12.
+Note that the oldest version of Python that this project has been tested on is 3.11, while the newest version is 3.12.
 
 ## Getting Started
 A tutorial code in a notebook called [Example.ipynb](tutorial/Example.ipynb) demonstrates formatting the data and running the ECG peak detection workflow.
