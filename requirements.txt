@@ -17,7 +17,7 @@ license-expression==30.4.4
 markdown-it-py==3.0.0
 matplotlib==3.10.9
 mdurl==0.1.2
-msgpack==1.2.1
+msgpack==1.2.3
 mypy==1.18.2
 mypy-extensions==1.1.0
 neurokit2==0.2.12
@@ -43,7 +43,7 @@ requests==2.33.0
 rich==14.1.0
 scipy==1.15.2
 semantic-version==2.10.0
-setuptools==83.0.0
+setuptools==84.1.0
 six==1.16.0
 sleepecg
 snowballstemmer==2.2.0
